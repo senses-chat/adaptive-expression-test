@@ -17,6 +17,26 @@ export class BotActions {
     });
   }
 
+  utterDefaultIntro(
+    dispatcher: Subject<OutgoingMessage>,
+    context: BotContext,
+    event: BotEvent,
+  ): void {
+    return dispatcher.next({
+      text: 'Hello from default scene!',
+    });
+  }
+
+  utterSpecialIntro(
+    dispatcher: Subject<OutgoingMessage>,
+    context: BotContext,
+    event: BotEvent,
+  ): void {
+    return dispatcher.next({
+      text: 'Hello from special scene!',
+    });
+  }
+
   utterAskRephrase(
     dispatcher: Subject<OutgoingMessage>,
     context: BotContext,
@@ -38,6 +58,8 @@ export class BotActions {
   public getActions(dispatcher: Subject<OutgoingMessage>) {
     return {
       utter_introduction: this.utterIntroduction.bind(this, dispatcher),
+      utter_default_intro: this.utterDefaultIntro.bind(this, dispatcher),
+      utter_special_intro: this.utterSpecialIntro.bind(this, dispatcher),
       utter_ask_rephrase: this.utterAskRephrase.bind(this, dispatcher),
       action_listen: this.listen.bind(this, dispatcher),
       assign_sender: assign((context, event) => ({

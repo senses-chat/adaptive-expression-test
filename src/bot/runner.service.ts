@@ -8,6 +8,7 @@ import { MAIN_MACHINE } from './bot.machine';
 import { TrackerService } from './tracker.service';
 import { BotActions } from './bot.actions';
 import { ConfigService } from '@nestjs/config';
+import { BotGuards } from './bot.guards';
 
 @Injectable()
 export class BotRunnerService {
@@ -18,6 +19,7 @@ export class BotRunnerService {
   constructor(
     private readonly configService: ConfigService,
     private readonly botActions: BotActions,
+    private readonly botGuards: BotGuards,
     private readonly tracker: TrackerService,
     @Inject(MAIN_MACHINE)
     private readonly mainMachine: StateMachine<any, any, any, any, any>,
@@ -39,6 +41,7 @@ export class BotRunnerService {
         const service = interpret(
           machine.withConfig({
             actions: this.botActions.getActions(dispatcher),
+            guards: this.botGuards.getGuards(),
           }),
           { execute: false },
         );

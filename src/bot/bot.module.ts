@@ -4,6 +4,7 @@ import { ConfigModule, RedisModule } from 'src/modules';
 
 import { BotActions } from './bot.actions';
 import { BotController } from './bot.controller';
+import { BotGuards } from './bot.guards';
 import { machineProviders } from './bot.machine';
 import { ParserService } from './parser.service';
 import { BotRunnerService } from './runner.service';
@@ -15,6 +16,7 @@ import { TrackerService } from './tracker.service';
   providers: [
     ...machineProviders,
     BotActions,
+    BotGuards,
     ParserService,
     TrackerService,
     BotRunnerService,

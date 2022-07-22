@@ -9,12 +9,19 @@ const machineConfig = {
   states: {
     idle: {
       on: {
-        greet: {
-          actions: ['utter_introduction', 'action_listen'],
-        },
-        file_uploaded: {
-          actions: ['utter_uploaded', 'action_listen'],
-        },
+        greet: [
+          {
+            actions: ['utter_default_intro', 'action_listen'],
+            cond: 'isDefaultScene',
+          },
+          {
+            actions: ['utter_special_intro', 'action_listen'],
+            cond: 'event.scene == "special"',
+          },
+          {
+            actions: ['utter_introduction', 'action_listen'],
+          },
+        ],
         '*': {
           actions: ['utter_ask_rephrase', 'action_listen'],
         },
