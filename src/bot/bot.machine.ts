@@ -1,5 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { createMachine, StateMachine } from 'xstate';
+import { GreetEvent } from './bot.interface';
 
 export const MAIN_MACHINE = Symbol.for('MAIN_MACHINE');
 
@@ -12,11 +13,11 @@ const machineConfig = {
         greet: [
           {
             actions: ['utter_default_intro', 'action_listen'],
-            cond: 'isDefaultScene',
+            cond: (context, event: GreetEvent) => event.scene == 'default',
           },
           {
             actions: ['utter_special_intro', 'action_listen'],
-            cond: 'event.scene == "special"',
+            cond: (context, event: GreetEvent) => event.scene == 'special',
           },
           {
             actions: ['utter_introduction', 'action_listen'],
